@@ -1,14 +1,14 @@
 import "./App.css";
-import Editor from "./components/Editor";
+// import Editor from "./components/Editor";
+import App from "./components/Test";
 
-function App() {
+function Home() {
   return (
     <>
-      <div>
-        <Editor />
-      </div>
+      {/* <Editor /> */}
+      <App />
     </>
   );
 }
 
-export default App;
+export default Home;
