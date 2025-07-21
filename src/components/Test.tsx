@@ -17,11 +17,13 @@ import type { EditorState } from "lexical";
 import { isHTMLElement, ParagraphNode, TextNode, $isTextNode } from "lexical";
 
 import ExampleTheme from "../ExampleTheme";
+// import { exampleTheme } from "../ExampleTheme";
 import ToolbarPlugin from "../plugins/ToolbarPlugin";
 import TreeViewPlugin from "../plugins/TreeViewPlugin";
 import { parseAllowedColor, parseAllowedFontSize } from "../styleConfig";
 import { useEffect, useState } from "react";
 import { MyOnChangePlugin } from "../plugins/OnChangePlugin";
+// import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 
 const placeholder = "Enter some rich text...";
 
@@ -146,6 +148,7 @@ const initialConfig = {
     throw error;
   },
   theme: ExampleTheme,
+  // theme: exampleTheme,
 };
 
 export default function Editor() {
@@ -176,6 +179,17 @@ export default function Editor() {
   return (
     // <LexicalComposer initialConfig={editorConfig}>
     <LexicalComposer initialConfig={initialConfig}>
+      {/* <PlainTextPlugin
+        contentEditable={
+          <ContentEditable
+            aria-placeholder={"Enter some text..."}
+            placeholder={
+              <div className="editor-placeholder">Enter some text...</div>
+            }
+          />
+        }
+        ErrorBoundary={LexicalErrorBoundary}
+      /> */}
       <h1 className="title">React.js Rich Text Lexical Example</h1>
       <div className="editor-container">
         <ToolbarPlugin />

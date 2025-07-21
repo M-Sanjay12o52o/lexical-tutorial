@@ -1,3 +1,9 @@
+// export const exampleTheme = {
+//   ltr: "ltr",
+//   rtl: "rtl",
+//   paragraph: "editor-paragraph",
+// };
+
 export default {
   code: "editor-code",
   heading: {
