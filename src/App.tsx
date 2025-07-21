@@ -1,12 +1,12 @@
 import "./App.css";
 // import Editor from "./components/Editor";
-import App from "./components/Test";
+import Editor from "./components/Test";
 
 function Home() {
   return (
     <>
       {/* <Editor /> */}
-      <App />
+      <Editor />
     </>
   );
 }

@@ -12,6 +12,7 @@ import type {
   LexicalEditor,
   LexicalNode,
 } from "lexical";
+import type { EditorState } from "lexical";
 
 import { isHTMLElement, ParagraphNode, TextNode, $isTextNode } from "lexical";
 
@@ -19,6 +20,8 @@ import ExampleTheme from "../ExampleTheme";
 import ToolbarPlugin from "../plugins/ToolbarPlugin";
 import TreeViewPlugin from "../plugins/TreeViewPlugin";
 import { parseAllowedColor, parseAllowedFontSize } from "../styleConfig";
+import { useEffect, useState } from "react";
+import { MyOnChangePlugin } from "../plugins/OnChangePlugin";
 
 const placeholder = "Enter some rich text...";
 
@@ -118,7 +121,21 @@ const constructImportMap = (): DOMConversionMap => {
   return importMap;
 };
 
-const editorConfig = {
+// const editorConfig = {
+//   html: {
+//     export: exportMap,
+//     import: constructImportMap(),
+//   },
+//   namespace: "React.js Demo",
+//   nodes: [ParagraphNode, TextNode],
+//   onError(error: Error) {
+//     throw error;
+//   },
+//   theme: ExampleTheme,
+// };
+
+// - [ ] TODO: Verify what goes here
+const initialConfig = {
   html: {
     export: exportMap,
     import: constructImportMap(),
@@ -131,9 +148,34 @@ const editorConfig = {
   theme: ExampleTheme,
 };
 
-export default function App() {
+export default function Editor() {
+  const [editorState, setEditorState] = useState<string | undefined>();
+  // const [, setEditorState] = useState<string | undefined>();
+
+  // - [ ] use this state variable to store the current state of the editor on db
+  // From here, it's straight forward to wire up a submit button or some other UI trigger that will take the state from the React state variable and send it to a server for storage in a database.
+
+  {
+    /*
+  One important thing to note: Lexical is generally meant to be controlled, so avoid trying to pass the EditorState back into Editor.setEditorState or something along those lines.
+  */
+  }
+  useEffect(() => {
+    console.log("editorState: ", editorState);
+  }, [editorState]);
+
+  function onChange(editorState: EditorState) {
+    // setEditorState(editorState);
+
+    // Call toJSON on the EditorState object, which produces a serialization safe string
+    const editorStateJSON = editorState.toJSON();
+    // However, we still have a JavaScript object, so we need to convert it to an actual string with JSON.stringify
+    setEditorState(JSON.stringify(editorStateJSON));
+  }
+
   return (
-    <LexicalComposer initialConfig={editorConfig}>
+    // <LexicalComposer initialConfig={editorConfig}>
+    <LexicalComposer initialConfig={initialConfig}>
       <h1 className="title">React.js Rich Text Lexical Example</h1>
       <div className="editor-container">
         <ToolbarPlugin />
@@ -153,6 +195,7 @@ export default function App() {
           <HistoryPlugin />
           <AutoFocusPlugin />
           <TreeViewPlugin />
+          <MyOnChangePlugin onChange={onChange} />
         </div>
       </div>
     </LexicalComposer>
